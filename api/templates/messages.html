@@ -1,0 +1,27 @@
+{% if messages %}
+    <div id="alert-box" class="fixed top-0 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded bg-blue-500 text-white mb-2 z-50 opacity-0 transition-opacity duration-1000 mt-6">
+        {% for message in messages %}
+            <div>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const alertBox = document.getElementById('alert-box');
+
+        if (alertBox) {
+            // Hacemos visible el mensaje
+            alertBox.classList.remove('opacity-0');
+            alertBox.classList.add('opacity-100');
+
+            // Desaparece después de 3 segundos
+            setTimeout(function() {
+                alertBox.classList.remove('opacity-100');
+                alertBox.classList.add('opacity-0');
+            }, 3000);
+        }
+    });
+</script>

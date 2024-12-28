@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Create Note{% endblock title %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+        <div class="mb-4">
+            <a href="{% url 'notes_list' %}" class="inline-block text-blue-500 hover:text-blue-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5l-7 7 7 7" />
+                </svg>
+            </a>
+        </div>
+        <h1 class="text-3xl font-bold mb-4 text-center">Create Note</h1>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label for="id_title" class="block text-sm font-medium text-gray-300">Title</label>
+                {{ form.title }}
+            </div>
+            <div>
+                <label for="id_content" class="block text-sm font-medium text-gray-300">Content</label>
+                {{ form.content }}
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

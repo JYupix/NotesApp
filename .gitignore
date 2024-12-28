@@ -1,0 +1,53 @@
+# Python general
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+
+# Django
+db.sqlite3
+*.log
+*.pot
+*.py[co]
+*.db
+*.swp
+*.swo
+media/
+staticfiles/
+
+# Environment variables and sensitive data
+.env
+.vscode/
+.idea/
+.DS_Store
+
+# Virtual environments
+venv/
+env/
+ENV/
+venv.bak/
+*.virtualenv
+
+# MacOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# PyCharm project files
+.idea/
+*.iml
+
+# JetBrains editors
+*.ipr
+*.iws

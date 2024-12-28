@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}My Notes{% endblock title %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-3xl font-bold">
+            <a href="{% url 'notes_list' %}">Notes List</a>
+        </h1>
+        <div class="flex space-x-4">
+            {% if archived_count > 0 %}
+                <a href="{% url 'notes-archived' %}"
+                    class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 inline-block sm:w-auto text-center 
+                        sm:block hidden">
+                    Archived
+                </a>
+                <a href="{% url 'notes-archived' %}"
+                class="sm:hidden inline-block text-gray-700 hover:text-gray-800">
+                    <i class="fas fa-archive text-gray-400 hover:text-white cursor-pointer" title="Archive Task"></i>
+                </a>
+            {% endif %}
+            <a href="{% url 'note-create' %}"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 inline-block sm:w-auto text-center 
+                      sm:block hidden">
+                New Note
+            </a>
+            <a href="{% url 'note-create' %}"
+               class="sm:hidden inline-block text-blue-500 hover:text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7H5" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    {% include "messages.html" %}
+    
+    <form method="get" class="mb-4">
+        <input type="text" name="q" value="{{ q }}" placeholder="Search notes..." 
+            class="px-4 py-2 w-full max-w-sm rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </form>
+
+    <ul class="space-y-4">
+        {% for note in notes %}
+        <li class="bg-gray-800 p-4 rounded-lg shadow-md">
+            <div class="flex justify-between items-center">
+                <div>
+                    <a href="{% url "note-update" note.id %}"><h2 class="text-xl font-semibold">{{ note.title }}</h2></a>
+                    <p class="text-gray-400">{{ note.content|truncatechars:25 }}</p>
+                    <p class="text-gray-500">Updated: {{ note.updated_at|timesince }} ago</p>
+                </div>
+                <div class="relative">
+                    <button 
+                        class="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full menu-button"
+                        id="menu-button-{{ forloop.counter }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />
+                        </svg>
+                    </button>
+                    <div 
+                        id="menu-{{ forloop.counter }}" 
+                        class="hidden absolute right-0 mt-2 w-32 bg-gray-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10 dropdown-menu">
+                        <a href="{% url 'note-update' note.id %}" 
+                           class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white">Edit</a>
+                        <a href="{% url 'note-delete' note.id %}" 
+                           class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white">Delete</a>
+                        <a href="{% url 'note-archived' note.id %}" 
+                           class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-white">Archive</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% include "pagination.html" %}
+</div>
+
+<script>
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('.menu-button')) {
+            const button = event.target.closest('.menu-button');
+            const menuId = button.id.replace('menu-button', 'menu');
+            const menu = document.getElementById(menuId);
+
+            menu.classList.toggle('hidden');
+        } else {
+            const menus = document.querySelectorAll('.dropdown-menu');
+            menus.forEach(menu => menu.classList.add('hidden'));
+        }
+    });
+</script>
+
+{% endblock content %}

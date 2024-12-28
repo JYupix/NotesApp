@@ -1,0 +1,25 @@
+<div class="flex justify-center mt-6">
+    <div class="flex items-center space-x-2">
+        {% if notes.has_previous %}
+            <a href="?page=1&q={{ q }}" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 flex items-center">
+                <i class="fas fa-angle-double-left"></i> <!-- Icono para 'First' -->
+            </a>
+            <a href="?page={{ notes.previous_page_number }}&q={{ q }}" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 flex items-center">
+                <i class="fas fa-chevron-left"></i> <!-- Icono para 'Previous' -->
+            </a>
+        {% endif %}
+        
+        <span class="px-4 py-2 text-gray-300">
+            Page {{ notes.number }} of {{ notes.paginator.num_pages }}
+        </span>
+
+        {% if notes.has_next %}
+            <a href="?page={{ notes.next_page_number }}&q={{ q }}" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 flex items-center">
+                <i class="fas fa-chevron-right"></i> <!-- Icono para 'Next' -->
+            </a>
+            <a href="?page={{ notes.paginator.num_pages }}&q={{ q }}" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 flex items-center">
+                <i class="fas fa-angle-double-right"></i> <!-- Icono para 'Last' -->
+            </a>
+        {% endif %}
+    </div>
+</div>
